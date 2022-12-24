@@ -222,9 +222,16 @@ class Battle{
             }
         }
 
+        $o = 0;
         $i = 0;
+        $team = "teamred","teamblue";
         
         foreach ($total as $ship){
+            $u++
+            if($u>1){
+                $u=0;
+            }
+            $whosTurn=$teams[$u]
             if($ship->getName() == "Carriership"){
                     $randomIndex = rand(0, count($CariershipMoveset=$Carriership + $default) - 1);
                     $selectedValue = $CariershipMoveset[$randomIndex];
@@ -246,16 +253,21 @@ class Battle{
                     $functions = $selectedValue;
             }
 
+            if ($i % 2 == 0) {
+                $o++;
+            }
+
             switch ($functions) {
                 case "move":
-                    $ship->move(rand(10 ,25))
+                    $ship->move(rand(10 ,25),rand(10 ,25))
                     break;
                 case "shoot":
-                    while (empty($total[$i + $more])) {
-                        $more += 2;
-                      }                      
-                    $ship->shoot($total[$i+$more]);
-                    break;
+                    if($team=="teamblue"){
+                        $ship->shoot($teamred[$o])
+                    }
+                    if($team=="teamred"){
+                        $ship->shoot($teamblue[$o])
+                    }
                 case "boost":
                     $ship->boost();
                     break;
