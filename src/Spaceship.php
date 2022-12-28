@@ -227,11 +227,20 @@ class Battle{
         $team = "teamred","teamblue";
         
         foreach ($total as $ship){
+            //laat merken welk team er aan zet is
             $u++
             if($u>1){
                 $u=0;
             }
             $whosTurn=$teams[$u]
+
+            //laat zien de hoeveelste schip van het team aan zet is 
+            //deze moet nog wel een reset van wanneer alle schepen aan de beurt zijn geweest
+            if ($i % 2 == 0) {
+                $o++;
+            }
+
+            //zorgt ervoor dat er een random functie uit de moveset van het character woerd gekozen
             if($ship->getName() == "Carriership"){
                     $randomIndex = rand(0, count($CariershipMoveset=$Carriership + $default) - 1);
                     $selectedValue = $CariershipMoveset[$randomIndex];
@@ -253,10 +262,7 @@ class Battle{
                     $functions = $selectedValue;
             }
 
-            if ($i % 2 == 0) {
-                $o++;
-            }
-
+            //activeert de functies
             switch ($functions) {
                 case "move":
                     $ship->move(rand(10 ,25),rand(10 ,25))
